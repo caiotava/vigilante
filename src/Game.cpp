@@ -34,7 +34,8 @@ bool Game::Initialize(const GameConfig &cfg) {
     }
 
     if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
-        spdlog::error("initializing sdl image for png: " + std::string(IMG_GetError()));
+        spdlog::error("initializing sdl image for png: ");
+        spdlog::error(std::string(IMG_GetError()));
         return false;
     }
 
@@ -47,20 +48,12 @@ bool Game::Initialize(const GameConfig &cfg) {
     m_currentScene = std::make_unique<Scene>(m_window, m_renderer);
     m_currentScene->Initialize();
 
+    m_isRunning = true;
+
     return true;
 }
 
-void Game::RunLoop() {
-    m_isRunning = true;
-
-    while (m_isRunning) {
-        processInput();
-        updateGame();
-        generateOutput();
-    }
-}
-
-void Game::processInput() {
+void Game::ProcessInput() {
     SDL_Event event;
 
     while (SDL_PollEvent(&event)) {
@@ -78,7 +71,7 @@ void Game::processInput() {
     }
 }
 
-void Game::updateGame() {
+void Game::UpdateGame() {
     auto frameTime = float(SDL_GetTicks() - m_ticksCount);
     if (frameTime < FRAME_TIME_MILLISECONDS) {
         SDL_Delay(FRAME_TIME_MILLISECONDS - frameTime);
@@ -94,8 +87,12 @@ void Game::updateGame() {
     m_currentScene->Update(deltaTime);
 }
 
-void Game::generateOutput() {
+void Game::GenerateOutput() {
     m_currentScene->Render();
+}
+
+bool Game::IsRunning() const {
+    return m_isRunning;
 }
 
 void Game::Shutdown() {

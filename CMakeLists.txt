@@ -3,6 +3,13 @@ project(vigilante)
 
 set(CMAKE_CXX_STANDARD 23)
 
+set(LD_OPTIONS "")
+
+if(EMSCRIPTEN)
+        set(CMAKE_EXECUTABLE_SUFFIX ".html")
+        set(LD_OPTIONS "${LD_OPTIONS}-s USE_SDL=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='[\"png\"]' -s WASM=1 --preload-file assets")
+endif()
+
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
@@ -11,6 +18,7 @@ find_package(Microsoft.GSL CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
 find_package(SDL2_mixer CONFIG REQUIRED)
 find_package(SDL2_ttf CONFIG REQUIRED)
+find_package(fmt CONFIG REQUIRED)
 
 include_directories(${PROJECT_SOURCE_DIR}/src)
 
@@ -25,8 +33,10 @@ target_link_libraries("Vigilante"
         $<IF:$<TARGET_EXISTS:SDL2_ttf::SDL2_ttf>,SDL2_ttf::SDL2_ttf,SDL2_ttf::SDL2_ttf-static>
         Microsoft.GSL::GSL
         spdlog::spdlog spdlog::spdlog_header_only
+        fmt::fmt
         EnTT::EnTT
         glm::glm
+        "${LD_OPTIONS}"
         )
 
 file(COPY assets DESTINATION .)

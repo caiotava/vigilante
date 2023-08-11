@@ -17,6 +17,7 @@ SDL_Texture *AssetStore::AddTexture(const std::string &assetID, const std::strin
     }
 
     m_textures[assetID] = texture;
+    return texture;
 }
 
 SDL_Texture *AssetStore::GetTexture(const std::string &assetID) {
@@ -29,4 +30,5 @@ bool AssetStore::Clear() {
     }
 
     m_textures.clear();
+    return true;
 }

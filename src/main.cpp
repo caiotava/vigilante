@@ -2,8 +2,19 @@
 
 #include <spdlog/spdlog.h>
 
+#ifdef EMSCRIPTEN
+#include <emscripten.h>
+#endif
+
+Game game{};
+
+void runLoop() {
+    game.ProcessInput();
+    game.UpdateGame();
+    game.GenerateOutput();
+}
+
 int main(int argc, char *argv[]) {
-    Game game;
     GameConfig config = {
             .title = "Vigilante Clone",
             .screenWidth = 800,
@@ -18,7 +29,13 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    game.RunLoop();
+#ifdef EMSCRIPTEN
+    emscripten_set_main_loop(runLoop, 0, 1);
+#else
+    while (game.IsRunning()) {
+        runLoop();
+    }
+#endif
     game.Shutdown();
 
     return 0;

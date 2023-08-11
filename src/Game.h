@@ -22,7 +22,13 @@ public:
 
     bool Initialize(const GameConfig &config);
 
-    void RunLoop();
+    void ProcessInput();
+
+    void UpdateGame();
+
+    void GenerateOutput();
+
+    bool IsRunning() const;
 
     void Shutdown();
 
@@ -38,11 +44,6 @@ private:
     std::unique_ptr<Scene> m_currentScene;
 
     //void initializeOpenGL();
-    void processInput();
-
-    void updateGame();
-
-    void generateOutput();
 };
 
 
