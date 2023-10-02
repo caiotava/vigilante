@@ -14,7 +14,7 @@ void MovementSystem::Update(entt::registry &registry, const float deltaTime) {
         }
 
         if (rigidBody.Velocity.y != 0) {
-            transform.Transform.y += rigidBody.Velocity.y;
+            transform.Transform.y += rigidBody.Velocity.y * deltaTime;
         }
     }
 }

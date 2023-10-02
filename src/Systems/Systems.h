@@ -8,5 +8,6 @@
 #include "JumpSystem.h"
 #include "MovementSystem.h"
 #include "RenderSystem.h"
+#include "Debug/DebugRenderCollisionSystem.h"
 
 #endif //VIGILANTE_SYSTEMS_H

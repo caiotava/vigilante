@@ -5,10 +5,10 @@ set(CMAKE_CXX_STANDARD 23)
 
 set(LD_OPTIONS "")
 
-if(EMSCRIPTEN)
-        set(CMAKE_EXECUTABLE_SUFFIX ".html")
-        set(LD_OPTIONS "${LD_OPTIONS}-s USE_SDL=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='[\"png\"]' -s WASM=1 --preload-file assets")
-endif()
+if (EMSCRIPTEN)
+    set(CMAKE_EXECUTABLE_SUFFIX ".html")
+    set(LD_OPTIONS "${LD_OPTIONS}-s USE_SDL=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='[\"png\"]' -s WASM=1 --preload-file assets")
+endif ()
 
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)
@@ -22,7 +22,21 @@ find_package(fmt CONFIG REQUIRED)
 
 include_directories(${PROJECT_SOURCE_DIR}/src)
 
-add_executable("Vigilante" src/main.cpp src/Game.cpp src/Scene/Scene.cpp src/AssetStore/AssetStore.cpp src/Systems/RenderSystem.cpp src/Systems/InputKeyboardSystem.cpp src/Systems/AnimationSystem.cpp src/Systems/CameraMovementSystem.cpp src/Systems/JumpSystem.cpp src/Systems/CollisionSystem.cpp src/Systems/MovementSystem.cpp)
+add_executable("Vigilante"
+        src/main.cpp
+        src/Game.cpp
+        src/Scene/Scene.cpp
+        src/AssetStore/AssetStore.cpp
+        src/Systems/RenderSystem.cpp
+        src/Systems/InputKeyboardSystem.cpp
+        src/Systems/AnimationSystem.cpp
+        src/Systems/CameraMovementSystem.cpp
+        src/Systems/JumpSystem.cpp
+        src/Systems/CollisionSystem.cpp
+        src/Systems/MovementSystem.cpp
+        src/Systems/Debug/DebugRenderCollisionSystem.h
+        src/Systems/Debug/DebugRenderCollisionSystem.cpp
+)
 
 target_link_libraries("Vigilante"
         PRIVATE
@@ -37,6 +51,6 @@ target_link_libraries("Vigilante"
         EnTT::EnTT
         glm::glm
         "${LD_OPTIONS}"
-        )
+)
 
 file(COPY assets DESTINATION .)

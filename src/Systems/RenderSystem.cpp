@@ -11,7 +11,7 @@ void RenderSystem::Update(entt::registry &registry, const float deltaTime) {
     auto camera = registry.ctx().get<CameraComponent>();
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-    SDL_RenderClear(renderer);
+    //SDL_RenderClear(renderer);
 
     auto group = registry.group<TransformComponent>(entt::get<SpriteComponent>);
 
@@ -36,5 +36,5 @@ void RenderSystem::Update(entt::registry &registry, const float deltaTime) {
         );
     }
 
-    SDL_RenderPresent(renderer);
+    //SDL_RenderPresent(renderer);
 }
