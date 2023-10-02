@@ -23,8 +23,19 @@ private:
     SDL_Renderer *m_renderer;
     std::shared_ptr<AssetStore> m_assetStore;
 
-    std::vector<std::shared_ptr<System>> m_systemsUpdate;
-    std::vector<std::shared_ptr<System>> m_systemsRender;
+    std::vector<std::unique_ptr<System>> m_systemsUpdate;
+    std::vector<std::unique_ptr<System>> m_systemsRender;
+
+    int rendererWidth = {0};
+    int rendererHeight = {0};
+
+    void initializeSystems();
+    void initializeContext();
+    void initializeCamera();
+    void createPlayerEntity();
+    void createEnemyEntity();
+    void createBackgroundEntity();
+    void createLevelBoundaries();
 };
 
 

@@ -10,7 +10,6 @@
 #include "LifeComponent.h"
 #include "RigidBodyComponent.h"
 #include "SpriteComponent.h"
-#include "TagComponent.h"
 #include "TransformComponent.h"
 
 #endif //VIGILANTE_COMPONENTS_H
